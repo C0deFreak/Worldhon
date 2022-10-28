@@ -79,7 +79,10 @@ while tries < guess_limit:
     # Petlje za provjeravanje
     if guess == secret_word[secret_word_number]:
         print(f'You won in {tries} tries!')
-        break
+        end_program = input('Type anything to quit the program: ')
+        if end_program == end_program:
+            print('Bye!')
+            break
 
     else:
         # Za svako slovo u listi

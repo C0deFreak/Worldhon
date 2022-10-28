@@ -86,10 +86,10 @@ while tries < guess_limit:
         for answers in guess_letters:
 
             # Ako je točno slovo na točnom mjestu dodaj x
-            if guess_letters[answer_index] == secret_word_letters[answer_index]:
+            if answers == secret_word_letters[answer_index]:
                 answer_mark += 'x'
             # Ako je točno slovo na krivom mjestu dodaj o
-            elif guess_letters[answer_index] in secret_word_letters and guess_letters[answer_index] != \
+            elif answers in secret_word_letters and guess_letters[answer_index] != \
                     secret_word_letters[answer_index]:
                 answer_mark += 'o'
             # Ako je krivo slovo dodaj _

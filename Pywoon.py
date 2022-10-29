@@ -1,5 +1,13 @@
 import random
 
+
+# Funkcija kraja
+def ending():
+    end_program = input('Type anything to quit the program: ')
+    if end_program == end_program:
+        print('Bye!')
+
+
 # Tajne riječi
 secret_word = ['alert', 'arise', 'actor', 'adult',
                'boost', 'brain', 'brown', 'built',
@@ -46,8 +54,8 @@ Welcome to Pywoon!
 Guess the correct word in the least amount of tries
 Rules:
 - Every word has 5 letters
-- x = Correct letter in correct place
-- o = Correct letter in wrong place
+- X = Correct letter in correct place
+- O = Correct letter in wrong place
 - _ = Wrong letter
 - If your guess has less than 5 letters 
   add any sign at the end
@@ -79,10 +87,8 @@ while tries < guess_limit:
     # Petlje za provjeravanje
     if guess == secret_word[secret_word_number]:
         print(f'You won in {tries} tries!')
-        end_program = input('Type anything to quit the program: ')
-        if end_program == end_program:
-            print('Bye!')
-            break
+        ending()
+        break
 
     else:
         # Za svako slovo u listi
@@ -90,11 +96,11 @@ while tries < guess_limit:
 
             # Ako je točno slovo na točnom mjestu dodaj x
             if answers == secret_word_letters[answer_index]:
-                answer_mark += 'x'
+                answer_mark += 'X'
             # Ako je točno slovo na krivom mjestu dodaj o
             elif answers in secret_word_letters and guess_letters[answer_index] != \
                     secret_word_letters[answer_index]:
-                answer_mark += 'o'
+                answer_mark += 'O'
             # Ako je krivo slovo dodaj _
             else:
                 answer_mark += '_'
@@ -103,6 +109,4 @@ while tries < guess_limit:
     print(answer_mark)
 else:
     print(f'Sorry you failed, the word was "{secret_word[secret_word_number]}"!')
-    end_program = input('Type anything to quit the program: ')
-    if end_program == end_program:
-        print('Bye!')
+    ending()

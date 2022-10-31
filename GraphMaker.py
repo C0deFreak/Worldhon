@@ -25,6 +25,7 @@ while same_test_answers < tests_answers:
     same_test_answers += 1
     answer_results = int(input(f'How many tests were positive for {same_test_answers}. possibility >> '))
     move_formula = 25 * ((answer_results / subject_number) * 10)
+    percentage = ((answer_results / subject_number) * 100)
     forward(20)
     left(90)
     forward(move_formula)

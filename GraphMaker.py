@@ -14,6 +14,7 @@ def graph(pe, mf):
     left(90)
     forward(25)
 
+
 def ending():
     end_program = input('Type anything to quit the program: ')
     if end_program == end_program:

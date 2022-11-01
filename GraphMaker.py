@@ -1,10 +1,88 @@
 from turtle import *
 
 
+def graph(pe, mf):
+    forward(35)
+    left(90)
+    forward(mf)
+    left(90)
+    forward(11)
+    write(f'{round(pe, 1)}%', align='center', font=('Arial', 8, 'bold'))
+    forward(14)
+    left(90)
+    forward(mf)
+    left(90)
+    forward(25)
+
 def ending():
     end_program = input('Type anything to quit the program: ')
     if end_program == end_program:
         print('Bye!')
+
+
+def graph_color(def_percentage, def_move_formula):
+    if def_percentage <= 10:
+        fillcolor('white')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 20:
+        fillcolor('red')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 30:
+        fillcolor('orange')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 40:
+        fillcolor('yellow')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 50:
+        fillcolor('#808000')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 60:
+        fillcolor('green')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 70:
+        fillcolor('cyan')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 80:
+        fillcolor('blue')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 90:
+        fillcolor('magenta')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    elif def_percentage <= 100:
+        fillcolor('purple')
+        begin_fill()
+        graph(mf=def_move_formula, pe=def_percentage)
+        end_fill()
+
+    else:
+        print('Error: wrong input')
 
 
 title('Graph')
@@ -30,16 +108,6 @@ while same_test_answers < tests_answers:
     answer_results = int(input(f'How many tests were positive for {same_test_answers}. possibility >> '))
     move_formula = 25 * ((answer_results / subject_number) * 10)
     percentage = ((answer_results / subject_number) * 100)
-    forward(35)
-    left(90)
-    forward(move_formula)
-    left(90)
-    forward(11)
-    write(f'{round(percentage, 1)}%', align='center', font=('Arial', 8, 'bold'))
-    forward(14)
-    left(90)
-    forward(move_formula)
-    left(90)
-    forward(25)
+    graph_color(def_percentage=percentage, def_move_formula=move_formula)
 
 ending()

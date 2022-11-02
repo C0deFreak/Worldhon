@@ -1,6 +1,28 @@
 from turtle import *
 
 
+def color_legend():
+    colors = ['white', 'red', 'orange', 'yellow', '#808000', 'green', 'cyan', 'blue', 'magenta', 'purple']
+    for col in range(10):
+        begin_fill()
+        penup()
+        goto(-350, (((col + 1) * 25)+5))
+        pendown()
+        for cube in range(4):
+            fillcolor(colors[col])
+            forward(10)
+            left(90)
+        end_fill()
+
+
+def txt_legend():
+    for txt in range(10):
+        penup()
+        goto(-300, ((txt + 1) * 25))
+        pendown()
+        write(f'{txt * 10}% - {(txt+1)*10}', align='center', font=('Arial', 10, 'bold'))
+
+
 def graph(pe, mf):
     forward(35)
     left(90)
@@ -22,6 +44,7 @@ def ending():
 
 
 def graph_color(def_percentage, def_move_formula):
+
     if def_percentage <= 10:
         fillcolor('white')
         begin_fill()
@@ -111,4 +134,6 @@ while same_test_answers < tests_answers:
     percentage = ((answer_results / subject_number) * 100)
     graph_color(def_percentage=percentage, def_move_formula=move_formula)
 
+txt_legend()
+color_legend()
 ending()

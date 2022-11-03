@@ -109,6 +109,8 @@ def graph_color(def_percentage, def_move_formula):
         print('Error: wrong input')
 
 
+p_check = 0
+
 title('Graph')
 hideturtle()
 penup()
@@ -130,10 +132,20 @@ same_test_answers = 0
 while same_test_answers < tests_answers:
     same_test_answers += 1
     answer_results = int(input(f'How many tests were positive for {same_test_answers}. possibility >> '))
-    move_formula = 25 * ((answer_results / subject_number) * 10)
     percentage = ((answer_results / subject_number) * 100)
+    p_check += percentage
+    if p_check > 101:
+        print('Error: Result is wrong')
+        ending()
+        break
+    move_formula = 25 * ((answer_results / subject_number) * 10)
     graph_color(def_percentage=percentage, def_move_formula=move_formula)
 
-txt_legend()
-color_legend()
-ending()
+if p_check < 99 or p_check > 101:
+    print('Error: Result is wrong')
+    print('Ending program...')
+
+else:
+    txt_legend()
+    color_legend()
+    ending()

@@ -126,6 +126,7 @@ for i in range(10):
 
 tests_answers = int(input('How many possibilities did you have >> '))
 subject_number = int(input('How many tests did you have >> '))
+legend_option = input('Do you want the graph legend(Y/N) >> ').lower()
 
 same_test_answers = 0
 
@@ -146,6 +147,9 @@ if p_check < 99 or p_check > 101:
     print('Ending program...')
 
 else:
-    txt_legend()
-    color_legend()
-    ending()
+    if legend_option == 'y':
+        txt_legend()
+        color_legend()
+        ending()
+    else:
+        ending()

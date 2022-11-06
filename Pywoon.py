@@ -1,5 +1,5 @@
 import random
-
+from turtle import *
 
 # Funkcija kraja
 def ending():
@@ -49,6 +49,8 @@ secret_word_number = random.randint(0, 95)
 # Pogođena riječ rastavljena na slova
 guess_letters = []
 
+title('Pywoon')
+
 print('''
 Welcome to Pywoon!
 Guess the correct word in the least amount of tries
@@ -71,8 +73,6 @@ for letters in secret_word[secret_word_number]:
 while tries < guess_limit:
     # Unos riječi
     guess = input('Guess the word: ').lower()
-    # Dodavanje pokušaja
-    tries += 1
     # Odgovor na koliko je stvari točno
     answer_mark = ''
     # Index na kojemu se nalazi odgovor
@@ -84,29 +84,72 @@ while tries < guess_limit:
     for letters_of_guess in guess:
         guess_letters.append(letters_of_guess)
 
-    # Petlje za provjeravanje
-    if guess == secret_word[secret_word_number]:
-        print(f'You won in {tries} tries!')
-        ending()
-        break
+    penup()
+    goto(-207.5, (325 - (tries * 110)))
 
-    else:
-        # Za svako slovo u listi
-        for answers in guess_letters:
+    for answers in guess_letters:
 
-            # Ako je točno slovo na točnom mjestu dodaj x
-            if answers == secret_word_letters[answer_index]:
-                answer_mark += 'X'
+        if answers == secret_word_letters[answer_index]:
+
+            pendown()
+            fillcolor('green')
+            begin_fill()
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+            penup()
+            forward(85)
+            end_fill()
+
+            if guess == secret_word[secret_word_number]:
+                print(f'You won in {tries} tries!')
+                ending()
+                break
+
             # Ako je točno slovo na krivom mjestu dodaj o
-            elif answers in secret_word_letters and guess_letters[answer_index] != \
-                    secret_word_letters[answer_index]:
-                answer_mark += 'O'
-            # Ako je krivo slovo dodaj _
-            else:
-                answer_mark += '_'
-            answer_index += 1
+        elif answers in secret_word_letters and guess_letters[answer_index] != secret_word_letters[answer_index]:
+            # answer_mark += 'O'
+            pendown()
+            fillcolor('yellow')
+            begin_fill()
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+            penup()
+            forward(85)
+            end_fill()
 
+        else:
+            # answer_mark += '_'
+            pendown()
+            fillcolor('gray')
+            begin_fill()
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+            penup()
+            forward(85)
+            end_fill()
+        answer_index += 1
+
+    tries += 1
     print(answer_mark)
+
 else:
     print(f'Sorry you failed, the word was "{secret_word[secret_word_number]}"!')
     ending()

@@ -1,14 +1,39 @@
 import random
 from turtle import *
 
-# Funkcija kraja
+
+def letter_holder(letter_write, write_color):
+    color(write_color)
+    begin_fill()
+    forward(75)
+    right(90)
+    forward(100)
+    right(90)
+    forward(75)
+    right(90)
+    forward(30)
+    penup()
+    right(90)
+    forward(37.5)
+    color('white')
+    write(f'{letter_write.upper()}', align='center', font=('Arial', 20, 'bold'))
+    color(write_color)
+    back(37.5)
+    left(90)
+    pendown()
+    forward(70)
+    right(90)
+    penup()
+    forward(85)
+    end_fill()
+
+
 def ending():
     end_program = input('Type anything to quit the program: ')
     if end_program == end_program:
         print('Bye!')
 
 
-# Tajne riječi
 secret_word = ['alert', 'arise', 'actor', 'adult',
                'boost', 'brain', 'brown', 'built',
                'carry', 'child', 'close', 'count',
@@ -34,22 +59,19 @@ secret_word = ['alert', 'arise', 'actor', 'adult',
                'youth', 'years', 'young', 'yards',
                'zilla', 'zeros', 'zorse', 'zokor']
 
-# Koliko si puta pokušo pogodit
 tries = 0
 
-# Max koliko možeš pogađat
 guess_limit = 6
 
-# Tajna riječ podjeljena na slova
 secret_word_letters = []
 
-# Random index na kojemu se nalazi tajna riječ
 secret_word_number = random.randint(0, 95)
 
-# Pogođena riječ rastavljena na slova
 guess_letters = []
 
 title('Pywoon')
+
+bgcolor('gray11')
 
 print('''
 Welcome to Pywoon!
@@ -65,22 +87,20 @@ Rules:
 Good Luck ;)
 ''')
 
-# Podjeli riječi s indexa koji je secret_word_number na slova i doda ih u listu
 for letters in secret_word[secret_word_number]:
     secret_word_letters.append(letters)
 
-# Dokle su tries(pokušaji) manji od guess_limit(max pokušaja) radi slijedeće
+
 while tries < guess_limit:
-    # Unos riječi
+
     guess = input('Guess the word: ').lower()
-    # Odgovor na koliko je stvari točno
+
     answer_mark = ''
-    # Index na kojemu se nalazi odgovor
+
     answer_index = 0
-    # Briše prošla pogođena slova
+
     guess_letters.clear()
 
-    # Podjeli pogođenu riječ na slova
     for letters_of_guess in guess:
         guess_letters.append(letters_of_guess)
 
@@ -92,60 +112,21 @@ while tries < guess_limit:
         if answers == secret_word_letters[answer_index]:
 
             pendown()
-            fillcolor('green')
-            begin_fill()
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-            penup()
-            forward(85)
-            end_fill()
+            letter_holder(letter_write=guess_letters[answer_index], write_color='green')
 
-            if guess == secret_word[secret_word_number]:
-                print(f'You won in {tries} tries!')
-                ending()
-                break
-
-            # Ako je točno slovo na krivom mjestu dodaj o
         elif answers in secret_word_letters and guess_letters[answer_index] != secret_word_letters[answer_index]:
-            # answer_mark += 'O'
             pendown()
-            fillcolor('yellow')
-            begin_fill()
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-            penup()
-            forward(85)
-            end_fill()
+            letter_holder(letter_write=guess_letters[answer_index], write_color='yellow')
 
         else:
-            # answer_mark += '_'
             pendown()
-            fillcolor('gray')
-            begin_fill()
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-            penup()
-            forward(85)
-            end_fill()
+            letter_holder(letter_write=guess_letters[answer_index], write_color='darkgray')
+
         answer_index += 1
+
+    if guess == secret_word[secret_word_number]:
+        ending()
+        break
 
     tries += 1
     print(answer_mark)

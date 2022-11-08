@@ -29,9 +29,9 @@ def letter_holder(letter_write, write_color):
 
 
 def ending():
-    end_program = input('Type anything to quit the program: ')
+    end_program = textinput('End Program', 'Write anything to end program')
     if end_program == end_program:
-        print('Bye!')
+        None
 
 
 secret_word = ['alert', 'arise', 'actor', 'adult',
@@ -71,21 +71,11 @@ guess_letters = []
 
 title('Pywoon')
 
+hideturtle()
+speed(100000000000000)
+
 bgcolor('gray11')
 
-print('''
-Welcome to Pywoon!
-Guess the correct word in the least amount of tries
-Rules:
-- Every word has 5 letters
-- X = Correct letter in correct place
-- O = Correct letter in wrong place
-- _ = Wrong letter
-- If your guess has less than 5 letters 
-  add any sign at the end
-
-Good Luck ;)
-''')
 
 for letters in secret_word[secret_word_number]:
     secret_word_letters.append(letters)
@@ -93,7 +83,7 @@ for letters in secret_word[secret_word_number]:
 
 while tries < guess_limit:
 
-    guess = input('Guess the word: ').lower()
+    guess = textinput('Guess your word', f'{tries + 1}. Guess')
 
     answer_mark = ''
 
@@ -125,6 +115,12 @@ while tries < guess_limit:
         answer_index += 1
 
     if guess == secret_word[secret_word_number]:
+        penup()
+        color('red')
+        goto(0, 0)
+        pendown()
+        clear()
+        write(f'You won in {tries + 1} tries!', align='center', font=('Arial', 35, 'bold'))
         ending()
         break
 
@@ -132,5 +128,10 @@ while tries < guess_limit:
     print(answer_mark)
 
 else:
-    print(f'Sorry you failed, the word was "{secret_word[secret_word_number]}"!')
+    penup()
+    color('red')
+    goto(0, 0)
+    pendown()
+    clear()
+    write(f'You failed, the word was "{secret_word[secret_word_number]}" !', align='center', font=('Arial', 35, 'bold'))
     ending()

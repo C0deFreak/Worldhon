@@ -30,8 +30,6 @@ def letter_holder(letter_write, write_color):
 
 def ending():
     end_program = textinput('End Program', 'Write anything to end program')
-    if end_program == end_program:
-        None
 
 
 secret_word = ['alert', 'arise', 'actor', 'adult',
@@ -72,9 +70,24 @@ guess_letters = []
 title('Pywoon')
 
 hideturtle()
-speed(100000000000000)
+speed(1000)
 
 bgcolor('gray11')
+
+for column in range(6):
+    penup()
+    goto(-207.5, (325 - (column * 110)))
+    pendown()
+    color('darkgray')
+    for row in range(5):
+        pendown()
+        for drawing in range(2):
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+        penup()
+        forward(85)
 
 
 for letters in secret_word[secret_word_number]:
@@ -116,11 +129,11 @@ while tries < guess_limit:
 
     if guess == secret_word[secret_word_number]:
         penup()
-        color('red')
+        color('white')
         goto(0, 0)
         pendown()
         clear()
-        write(f'You won in {tries + 1} tries!', align='center', font=('Arial', 35, 'bold'))
+        write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
         ending()
         break
 
@@ -129,9 +142,9 @@ while tries < guess_limit:
 
 else:
     penup()
-    color('red')
+    color('white')
     goto(0, 0)
     pendown()
     clear()
-    write(f'You failed, the word was "{secret_word[secret_word_number]}" !', align='center', font=('Arial', 35, 'bold'))
+    write(f'You failed, the word was "{secret_word[secret_word_number]}" !', align='center', font=('MS Sans Serif', 35, 'bold'))
     ending()

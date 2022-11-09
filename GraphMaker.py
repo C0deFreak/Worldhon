@@ -112,6 +112,7 @@ def graph_color(def_percentage, def_move_formula):
 p_check = 0
 
 title('Graph')
+speed(1000)
 hideturtle()
 penup()
 goto(-250, 250)

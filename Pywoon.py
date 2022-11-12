@@ -56,7 +56,8 @@ secret_word = ['alert', 'arise', 'actor', 'adult',
                'xonox', 'xterm', 'xueta', 'xerox',
                'youth', 'years', 'young', 'yards',
                'zilla', 'zeros', 'zorse', 'zokor',
-               'phone', 'ditch', 'apple', 'green']
+               'phone', 'ditch', 'apple', 'green',
+               'truck', 'table', 'plant', 'chair']
 
 tries = 0
 

@@ -2,6 +2,7 @@ import random
 from WordList import spliting_words
 from turtle import *
 import time
+from datetime import datetime
 
 
 def logo():
@@ -90,6 +91,11 @@ secret_number = random.randint(0, 2499)
 
 guess_letters = []
 
+time_now = int(datetime.now().strftime('%H'))
+
+time_list = [11, 12, 13]
+
+
 title('Pywoon')
 
 hideturtle()
@@ -101,73 +107,79 @@ option = textinput('OPTIONS', 'RULES / START').upper()
 
 if option == 'START':
 
-    logo()
-    time.sleep(3)
-    clear()
+    if time_now in time_list:
 
-    for column in range(6):
-        penup()
-        goto(-207.5, (325 - (column * 110)))
-        pendown()
-        color('darkgray')
-        begin_fill()
-        for row in range(5):
-            pendown()
-            for drawing in range(2):
-                forward(75)
-                right(90)
-                forward(100)
-                right(90)
+        logo()
+        time.sleep(3)
+        clear()
+
+        for column in range(6):
             penup()
-            forward(85)
-        end_fill()
+            goto(-207.5, (325 - (column * 110)))
+            pendown()
+            color('darkgray')
+            begin_fill()
+            for row in range(5):
+                pendown()
+                for drawing in range(2):
+                    forward(75)
+                    right(90)
+                    forward(100)
+                    right(90)
+                penup()
+                forward(85)
+            end_fill()
 
-    for letters in secret_word[secret_number]:
-        secret_word_letters.append(letters)
+        for letters in secret_word[secret_number]:
+            secret_word_letters.append(letters)
 
-    while tries < guess_limit:
+        while tries < guess_limit:
 
-        guess = textinput('Guess your word', f'{tries + 1}. Guess')
+            guess = textinput('Guess your word', f'{tries + 1}. Guess')
 
-        answer_mark = ''
+            answer_mark = ''
 
-        answer_index = 0
+            answer_index = 0
 
-        guess_letters.clear()
+            guess_letters.clear()
 
-        for letters_of_guess in guess:
-            guess_letters.append(letters_of_guess)
+            for letters_of_guess in guess:
+                guess_letters.append(letters_of_guess)
 
-        penup()
-        goto(-207.5, (325 - (tries * 110)))
-        if guess in secret_word:
-            for answers in guess_letters:
+            penup()
+            goto(-207.5, (325 - (tries * 110)))
+            if guess in secret_word:
+                for answers in guess_letters:
 
-                if answers == secret_word_letters[answer_index]:
-                    eachletter('green')
+                    if answers == secret_word_letters[answer_index]:
+                        eachletter('green')
 
-                elif answers in secret_word_letters and guess_letters[answer_index] != secret_word_letters[answer_index]:
-                    eachletter('yellow')
+                    elif answers in secret_word_letters and guess_letters[answer_index] != secret_word_letters[answer_index]:
+                        eachletter('yellow')
 
-                else:
-                    eachletter('darkgray')
+                    else:
+                        eachletter('darkgray')
 
-                answer_index += 1
+                    answer_index += 1
 
-            if guess == secret_word[secret_number]:
-                textdraw()
-                write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
-                ending()
-                break
+                if guess == secret_word[secret_number]:
+                    textdraw()
+                    write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
+                    ending()
+                    break
 
-            tries += 1
-            print(answer_mark)
+                tries += 1
+                print(answer_mark)
+            else:
+                pass
+
         else:
-            pass
+            textdraw()
+            write(f'Failed, the word was "{secret_word[secret_number]}"!', align='center', font=('MS Sans Serif', 35, 'bold'))
+            ending()
 
     else:
-        textdraw()
-        write(f'Failed, the word was "{secret_word[secret_number]}"!', align='center', font=('MS Sans Serif', 35, 'bold'))
+        write('Come back between 11h - 13h', align='center', font=('MS Sans Serif', 40, 'bold'))
         ending()
 
 elif option == 'RULES':
@@ -256,3 +268,7 @@ elif option == 'RULES':
     write('GRAY - Wrong letter', align='center', font=('MS Sans Serif', 20, 'bold'))
     time.sleep(5)
     clear()
+
+else:
+    write('Wrong Input!', align='center', font=('MS Sans Serif', 40, 'bold'))
+    ending()

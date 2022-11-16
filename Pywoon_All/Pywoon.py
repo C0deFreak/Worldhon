@@ -3,6 +3,7 @@ from WordList import spliting_words
 from turtle import *
 import time
 from datetime import datetime
+import keyboard
 
 
 def logo():
@@ -77,6 +78,7 @@ def letter_holder(letter_write, write_color):
 # Delays the program from ending too quickly
 def ending():
     textinput('End Program', 'Write anything to end program')
+    bye()
 
 
 secret_word = spliting_words()
@@ -93,7 +95,7 @@ guess_letters = []
 
 time_now = int(datetime.now().strftime('%H'))
 
-time_list = [11, 12, 13]
+time_list = [11, 12, 13, 18]
 
 
 title('Pywoon')
@@ -134,8 +136,36 @@ if option == 'START':
             secret_word_letters.append(letters)
 
         while tries < guess_limit:
+            
+            guess = ''
+            number_for_guessing = 0
+            goto(-207.5, (325 - (tries * 110)))
+            while number_for_guessing < 5:
+                color('white')
+                input_letters = keyboard.read_key()
+                penup()
+                sety(325 - (tries * 110))
+                forward(75)
+                right(90)
+                forward(100)
+                right(90)
+                forward(75)
+                right(90)
+                forward(30)
+                right(90)
+                forward(37.5)
+                write(f'{input_letters.upper()}', align='center', font=('Arial', 20, 'bold'))
+                back(37.5)
+                left(90)
+                pendown()
+                forward(70)
+                right(90)
+                penup()
+                forward(85)
+                guess += str(input_letters)
+                number_for_guessing += 1
 
-            guess = textinput('Guess your word', f'{tries + 1}. Guess')
+            number_for_guessing = 0
 
             answer_mark = ''
 
@@ -171,6 +201,18 @@ if option == 'START':
                 tries += 1
                 print(answer_mark)
             else:
+                color('darkgray')
+                for repeat1 in range(5):
+                    for repeat2 in range(4):
+                        pendown()
+                        begin_fill()
+                        forward(75)
+                        right(90)
+                        forward(100)
+                        right(90)
+                        end_fill()
+                    penup()
+                    forward(85)
                 pass
 
         else:
@@ -267,7 +309,7 @@ elif option == 'RULES':
     pendown()
     write('GRAY - Wrong letter', align='center', font=('MS Sans Serif', 20, 'bold'))
     time.sleep(5)
-    clear()
+    bye()
 
 else:
     write('Wrong Input!', align='center', font=('MS Sans Serif', 40, 'bold'))

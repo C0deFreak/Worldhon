@@ -95,7 +95,7 @@ guess_letters = []
 
 time_now = int(datetime.now().strftime('%H'))
 
-time_list = [11, 12, 13, 18]
+time_list = [11, 12, 13]
 
 
 title('Pywoon')

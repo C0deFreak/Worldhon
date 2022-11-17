@@ -77,8 +77,12 @@ def letter_holder(letter_write, write_color):
 
 # Delays the program from ending too quickly
 def ending():
-    textinput('End Program', 'Write anything to end program')
-    bye()
+    penup()
+    goto(0, -50)
+    write('Esc - EXIT', align='center', font=('MS Sans Serif', 35, 'bold'))
+    while True:
+        if keyboard.read_key() == 'esc':
+            bye()
 
 
 secret_word = spliting_words()
@@ -143,27 +147,31 @@ if option == 'START':
             while number_for_guessing < 5:
                 color('white')
                 input_letters = keyboard.read_key()
-                penup()
-                sety(325 - (tries * 110))
-                forward(75)
-                right(90)
-                forward(100)
-                right(90)
-                forward(75)
-                right(90)
-                forward(30)
-                right(90)
-                forward(37.5)
-                write(f'{input_letters.upper()}', align='center', font=('Arial', 20, 'bold'))
-                back(37.5)
-                left(90)
-                pendown()
-                forward(70)
-                right(90)
-                penup()
-                forward(85)
-                guess += str(input_letters)
-                number_for_guessing += 1
+
+                if len(input_letters) == 1:
+                    penup()
+                    sety(325 - (tries * 110))
+                    forward(75)
+                    right(90)
+                    forward(100)
+                    right(90)
+                    forward(75)
+                    right(90)
+                    forward(30)
+                    right(90)
+                    forward(37.5)
+                    write(f'{input_letters.upper()}', align='center', font=('Arial', 20, 'bold'))
+                    back(37.5)
+                    left(90)
+                    pendown()
+                    forward(70)
+                    right(90)
+                    penup()
+                    forward(85)
+                    guess += str(input_letters)
+                    number_for_guessing += 1
+                else:
+                    pass
 
             number_for_guessing = 0
 

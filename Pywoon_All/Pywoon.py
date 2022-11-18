@@ -85,6 +85,18 @@ def ending():
             bye()
 
 
+def removing_letter():
+    color('darkgray')
+    for repeat2 in range(4):
+        pendown()
+        begin_fill()
+        forward(75)
+        right(90)
+        forward(100)
+        right(90)
+        end_fill()
+
+
 secret_word = spliting_words()
 
 tries = 0
@@ -99,7 +111,7 @@ guess_letters = []
 
 time_now = int(datetime.now().strftime('%H'))
 
-time_list = [11, 12, 13]
+time_list = [11, 12, 13, 22]
 
 
 title('Pywoon')
@@ -148,6 +160,13 @@ if option == 'START':
                 color('white')
                 input_letters = keyboard.read_key()
 
+                if input_letters == 'backspace':
+                    guess = guess.replace(guess[number_for_guessing - 1], '', 1)
+                    setx(-207.5 + (85 * (number_for_guessing - 1)))
+                    removing_letter()
+                    if number_for_guessing > 0:
+                        number_for_guessing -= 1
+
                 if len(input_letters) == 1:
                     penup()
                     sety(325 - (tries * 110))
@@ -170,8 +189,6 @@ if option == 'START':
                     forward(85)
                     guess += str(input_letters)
                     number_for_guessing += 1
-                else:
-                    pass
 
             number_for_guessing = 0
 
@@ -209,20 +226,10 @@ if option == 'START':
                 tries += 1
                 print(answer_mark)
             else:
-                color('darkgray')
                 for repeat1 in range(5):
-                    for repeat2 in range(4):
-                        pendown()
-                        begin_fill()
-                        forward(75)
-                        right(90)
-                        forward(100)
-                        right(90)
-                        end_fill()
+                    removing_letter()
                     penup()
                     forward(85)
-                pass
-
         else:
             textdraw()
             write(f'Failed, the word was "{secret_word[secret_number]}"!', align='center', font=('MS Sans Serif', 35, 'bold'))

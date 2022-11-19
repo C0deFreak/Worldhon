@@ -2,7 +2,6 @@ import random
 from WordList import spliting_words
 from turtle import *
 import time
-from datetime import datetime
 import keyboard
 
 
@@ -47,13 +46,10 @@ def text_draw():
 def letter_holder(letter_write, write_color):
     color(write_color)
     begin_fill()
-    forward(75)
-    right(90)
-    forward(100)
-    right(90)
-    forward(75)
-    right(90)
-    forward(30)
+    for x in range(3):
+        forward(75)
+        right(90)
+    forward(17.5)
     penup()
     right(90)
     forward(37.5)
@@ -63,7 +59,7 @@ def letter_holder(letter_write, write_color):
     back(37.5)
     left(90)
     pendown()
-    forward(70)
+    forward(57.5)
     right(90)
     penup()
     forward(85)
@@ -83,14 +79,12 @@ def ending():
 # Function that paints over letters if you input a word that isn't in list or when you use backspace
 def removing_letter():
     color('darkgray')
+    pendown()
+    begin_fill()
     for repeat2 in range(4):
-        pendown()
-        begin_fill()
         forward(75)
         right(90)
-        forward(100)
-        right(90)
-        end_fill()
+    end_fill()
 
 
 def animation_main(times_draw, anim_txt, color_bool, color_of_tile, color_of_full_drawing, grid):
@@ -101,10 +95,8 @@ def animation_main(times_draw, anim_txt, color_bool, color_of_tile, color_of_ful
     if color_bool:
         color(color_of_tile)
         begin_fill()
-        for anim_color_drawing in range(2):
+        for anim_color_drawing in range(4):
             forward(75)
-            right(90)
-            forward(100)
             right(90)
         penup()
         forward(85)
@@ -114,10 +106,8 @@ def animation_main(times_draw, anim_txt, color_bool, color_of_tile, color_of_ful
     begin_fill()
     for anim_row in range(times_draw):
         pendown()
-        for anim_drawing in range(2):
+        for anim_drawing in range(4):
             forward(75)
-            right(90)
-            forward(100)
             right(90)
         penup()
         forward(85)
@@ -202,9 +192,9 @@ if option == 'START':
                 sety(325 - (tries * 110))
                 forward(37.5)
                 right(90)
-                forward(70)
+                forward(57.5)
                 write(f'{input_letters.upper()}', align='center', font=('Arial', 20, 'bold'))
-                back(70)
+                back(57.5)
                 left(90)
                 forward(47.5)
                 guess += str(input_letters)

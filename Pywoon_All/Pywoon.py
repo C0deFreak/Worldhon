@@ -169,7 +169,7 @@ if option == 'START':
                 # Deletes the last letter you wrote
                 if input_letters == 'backspace':
                     penup()
-                    guess = guess.replace(guess[number_for_guessing - 1], '', 1)
+                    guess = guess[:-1]
                     setx(-207.5 + (85 * (number_for_guessing - 1)))
                     removing_letter()
                     if number_for_guessing > 0:

@@ -4,5 +4,6 @@ Current projects:
 - Pywoon(Wordle type of game)
 - Graph maker
 - Spam bot 
+- PY Paint
 
 P.S. Feel free to use my code for learning and fun

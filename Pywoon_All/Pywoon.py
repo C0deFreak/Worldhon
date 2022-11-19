@@ -74,7 +74,7 @@ def letter_holder(letter_write, write_color):
 def ending():
     penup()
     goto(0, -50)
-    write('Esc - EXIT', align='center', font=('MS Sans Serif', 35, 'bold'))
+    write('Esc - EXIT', align='center', font=('MS Sans Serif', 15, 'bold'))
     while True:
         if keyboard.read_key() == 'esc':
             bye()
@@ -93,6 +93,52 @@ def removing_letter():
         end_fill()
 
 
+def animation_main(times_draw, anim_txt, color_bool, color_of_tile, color_of_full_drawing, grid):
+    if grid:
+        penup()
+        goto(-207.5, 140)
+
+    if color_bool:
+        color(color_of_tile)
+        begin_fill()
+        for anim_color_drawing in range(2):
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+        penup()
+        forward(85)
+        end_fill()
+
+    color(color_of_full_drawing)
+    begin_fill()
+    for anim_row in range(times_draw):
+        pendown()
+        for anim_drawing in range(2):
+            forward(75)
+            right(90)
+            forward(100)
+            right(90)
+        penup()
+        forward(85)
+    end_fill()
+
+    if grid:
+        goto(0, 0)
+        pendown()
+        color('white')
+        write(f'{anim_txt}', align='center', font=('MS Sans Serif', 20, 'bold'))
+        time.sleep(5)
+        clear()
+
+
+# Opens a turtle window and sets it up
+title('Pywoon')
+hideturtle()
+speed(1000)
+bgcolor('gray11')
+
+
 # All the variables
 # Adds list of words in 'WordList' to this program
 secret_word = spliting_words()
@@ -106,157 +152,123 @@ secret_word_letters = []
 secret_number = random.randint(0, 2499)
 # Divides guessed word to letters
 guess_letters = []
-# Variables that are important for playtime
-time_now = int(datetime.now().strftime('%H'))
-time_list = [11, 12, 13]
 # Input that gives you a choice of rules or starting the game
 option = textinput('OPTIONS', 'RULES / START').upper()
-
-
-# Opens a turtle window and sets it up
-title('Pywoon')
-hideturtle()
-speed(1000)
-bgcolor('gray11')
 
 
 # Starts the game program if your input is correct
 if option == 'START':
 
-    # Checks if you can play at this time
-    if time_now in time_list:
+    logo()
+    time.sleep(3)
+    clear()
 
-        logo()
-        time.sleep(3)
-        clear()
+    # Draws the play board
+    for column in range(6):
+        penup()
+        goto(-207.5, (325 - (column * 110)))
+        animation_main(5, '', False, '', 'darkgray', False)
 
-        # Draws the play board
-        for column in range(6):
-            penup()
-            goto(-207.5, (325 - (column * 110)))
-            pendown()
-            color('darkgray')
-            begin_fill()
-            for row in range(5):
-                pendown()
-                for drawing in range(2):
-                    forward(75)
-                    right(90)
-                    forward(100)
-                    right(90)
+    # Divides secret word letters and adds them to a list
+    for letters in secret_word[secret_number]:
+        secret_word_letters.append(letters)
+
+    # Checks if you used all of your tries
+    while tries < guess_limit:
+
+        # Sets up the guess input
+        guess = ''
+        number_for_guessing = 0
+        penup()
+        goto(-207.5, (325 - (tries * 110)))
+
+        # Checks if you already input the guess
+        while number_for_guessing < 5:
+            color('white')
+            input_letters = keyboard.read_key()
+
+            # Deletes the last letter you wrote
+            if input_letters == 'backspace':
                 penup()
-                forward(85)
-            end_fill()
+                guess = guess[:-1]
+                setx(-207.5 + (85 * (number_for_guessing - 1)))
+                removing_letter()
+                if number_for_guessing > 0:
+                    number_for_guessing -= 1
 
-        # Divides secret word letters and adds them to a list
-        for letters in secret_word[secret_number]:
-            secret_word_letters.append(letters)
+            # Draws the letter you input
+            if len(input_letters) == 1:
+                penup()
+                sety(325 - (tries * 110))
+                forward(37.5)
+                right(90)
+                forward(70)
+                write(f'{input_letters.upper()}', align='center', font=('Arial', 20, 'bold'))
+                back(70)
+                left(90)
+                forward(47.5)
+                guess += str(input_letters)
+                time.sleep(0.125)
+                number_for_guessing += 1
 
-        # Checks if you used all of your tries
-        while tries < guess_limit:
+        number_for_guessing = 0
 
-            # Sets up the guess input
-            guess = ''
-            number_for_guessing = 0
-            penup()
-            goto(-207.5, (325 - (tries * 110)))
+        answer_mark = ''
 
-            # Checks if you already input the guess
-            while number_for_guessing < 5:
+        answer_index = 0
+
+        guess_letters.clear()
+
+        # Divides guess letters and adds them to a list
+        for letters_of_guess in guess:
+            guess_letters.append(letters_of_guess)
+
+        penup()
+        goto(-207.5, (325 - (tries * 110)))
+
+        # Gives you the answer to your guess
+        if guess in secret_word:
+            for answers in guess_letters:
+
+                # Correct letter and place
+                if answers == secret_word_letters[answer_index]:
+                    each_letter('green')
+
+                # Correct letter but wrong place
+                elif answers in secret_word_letters and guess_letters[answer_index] != secret_word_letters[answer_index]:
+                    each_letter('yellow')
+
+                # Wrong letter
+                else:
+                    each_letter('gray80')
+
+                answer_index += 1
+
+            # Draws win text
+            if guess == secret_word[secret_number]:
+                text_draw()
                 color('white')
-                input_letters = keyboard.read_key()
+                write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
+                ending()
+                break
 
-                # Deletes the last letter you wrote
-                if input_letters == 'backspace':
-                    penup()
-                    guess = guess[:-1]
-                    setx(-207.5 + (85 * (number_for_guessing - 1)))
-                    removing_letter()
-                    if number_for_guessing > 0:
-                        number_for_guessing -= 1
-
-                # Draws the letter you input
-                if len(input_letters) == 1:
-                    penup()
-                    sety(325 - (tries * 110))
-                    forward(75)
-                    right(90)
-                    forward(100)
-                    right(90)
-                    forward(75)
-                    right(90)
-                    forward(30)
-                    right(90)
-                    forward(37.5)
-                    write(f'{input_letters.upper()}', align='center', font=('Arial', 20, 'bold'))
-                    back(37.5)
-                    left(90)
-                    forward(70)
-                    right(90)
-                    forward(85)
-                    guess += str(input_letters)
-                    number_for_guessing += 1
-
-            number_for_guessing = 0
-
-            answer_mark = ''
-
-            answer_index = 0
-
-            guess_letters.clear()
-
-            # Divides guess letters and adds them to a list
-            for letters_of_guess in guess:
-                guess_letters.append(letters_of_guess)
-
-            penup()
-            goto(-207.5, (325 - (tries * 110)))
-
-            # Gives you the answer to your guess
-            if guess in secret_word:
-                for answers in guess_letters:
-
-                    # Correct letter and place
-                    if answers == secret_word_letters[answer_index]:
-                        each_letter('green')
-
-                    # Correct letter but wrong place
-                    elif answers in secret_word_letters and guess_letters[answer_index] != secret_word_letters[answer_index]:
-                        each_letter('yellow')
-
-                    # Wrong letter
-                    else:
-                        each_letter('gray80')
-
-                    answer_index += 1
-
-                # Draws win text
-                if guess == secret_word[secret_number]:
-                    text_draw()
-                    write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
-                    ending()
-                    break
-
-                tries += 1
-                print(answer_mark)
+            tries += 1
+            print(answer_mark)
 
             # Removes your guess if it is not in list
-            else:
-                for repeat1 in range(5):
-                    removing_letter()
-                    penup()
-                    forward(85)
-
-        # Draws lose text
         else:
-            text_draw()
-            write(f'Failed, the word was "{secret_word[secret_number]}"!', align='center', font=('MS Sans Serif', 35, 'bold'))
-            ending()
+            for repeat1 in range(5):
+                removing_letter()
+                penup()
+                forward(85)
 
-    # Draws if it is not the right time to play
+    # Draws lose text
     else:
-        write('Come back between 11h - 13h', align='center', font=('MS Sans Serif', 40, 'bold'))
+        text_draw()
+        color('white')
+        write(f'Failed, the word was "{secret_word[secret_number]}"!', align='center', font=('MS Sans Serif', 35, 'bold'))
         ending()
+
 
 # Begins the rules animation if the input is correct
 elif option == 'RULES':
@@ -265,88 +277,17 @@ elif option == 'RULES':
     clear()
 
     # Green TUTORIAL
-    penup()
-    goto(-207.5, 140)
-    color('green')
-    begin_fill()
-    for drawing1 in range(2):
-        forward(75)
-        right(90)
-        forward(100)
-        right(90)
-    penup()
-    forward(85)
-    end_fill()
-    color('darkgray')
-    begin_fill()
-    for row1 in range(4):
-        pendown()
-        for drawing1 in range(2):
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-        penup()
-        forward(85)
-    end_fill()
-    goto(0, 0)
-    pendown()
-    write('GREEN - Right letter & place', align='center', font=('MS Sans Serif', 20, 'bold'))
-    time.sleep(5)
-    clear()
+    animation_main(4, 'GREEN - Right letter & place', True, 'green', 'gray80', True)
 
     # Yellow TUTORIAL
-    penup()
-    goto(-207.5, 140)
-    color('yellow')
-    begin_fill()
-    for drawing1 in range(2):
-        forward(75)
-        right(90)
-        forward(100)
-        right(90)
-    penup()
-    forward(85)
-    end_fill()
-    color('darkgray')
-    begin_fill()
-    for row1 in range(4):
-        pendown()
-        for drawing1 in range(2):
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-        penup()
-        forward(85)
-    end_fill()
-    goto(0, 0)
-    pendown()
-    write('YELLOW - Right letter but wrong place', align='center', font=('MS Sans Serif', 20, 'bold'))
-    time.sleep(5)
-    clear()
+    animation_main(4, 'YELLOW - Right letter but wrong place', True, 'yellow', 'gray80', True)
 
     # Gray TUTORIAL
-    penup()
-    goto(-207.5, 140)
-    begin_fill()
-    for row1 in range(5):
-        pendown()
-        for drawing1 in range(2):
-            forward(75)
-            right(90)
-            forward(100)
-            right(90)
-        penup()
-        forward(85)
-    end_fill()
-    goto(0, 0)
-    pendown()
-    write('GRAY - Wrong letter', align='center', font=('MS Sans Serif', 20, 'bold'))
-    time.sleep(5)
+    animation_main(5, 'GRAY - Wrong letter', False, 'gray80', 'gray80', True)
     bye()
 
 # Draws if you made a wrong input
 else:
+    color('white')
     write('Wrong Input!', align='center', font=('MS Sans Serif', 40, 'bold'))
     ending()

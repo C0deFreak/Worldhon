@@ -1,4 +1,5 @@
 def spliting_words():
+    # String of all possible words in the game
     secret_wordlist = wordlist = '''
         aback
         abase
@@ -2500,4 +2501,5 @@ def spliting_words():
         yummy
         zones'''
 
+    # Important for giving the list to the main program
     return secret_wordlist.split()

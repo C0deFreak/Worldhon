@@ -7,22 +7,33 @@ import keyboard
 
 # Logo that shows up at the beginning of the game or rules
 def logo():
+    color_list = ['green', 'yellow', 'gray80', 'gray30']
     penup()
     goto(-75, 100)
-    pencolor('black')
-    pensize(15)
-    fillcolor('green yellow')
     pendown()
-    begin_fill()
-    for logo_num in range(2):
+    color_vari = 0
+    for inside_logo in range(4):
+        fillcolor(color_list[color_vari])
+        begin_fill()
+        pendown()
+        for logo_num in range(4):
+            forward(75)
+            right(90)
+        end_fill()
+        penup()
+        pensize(15)
         forward(150)
         right(90)
-        forward(200)
+        color_vari += 1
+    pensize(15)
+    pendown()
+    for outside_logo in range(4):
+        forward(150)
         right(90)
-    end_fill()
+
     color('white')
     penup()
-    goto(0, -60)
+    goto(0, -40)
     write('P', align='center', font=('MS Sans Serif', 80, 'bold'))
     pensize(1)
 
@@ -60,8 +71,6 @@ def letter_holder(letter_write, write_color):
     back(58)
     left(90)
     forward(48)
-
-
 
 
 # Delays the program from ending too quickly
@@ -164,8 +173,8 @@ logo()
 time.sleep(3)
 clear()
 
-# Starts the game program
 
+# Starts the game program
 clear()
 
 # Draws the play board

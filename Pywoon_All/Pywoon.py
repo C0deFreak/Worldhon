@@ -13,6 +13,7 @@ def logo():
     pendown()
     color_vari = 0
     for inside_logo in range(4):
+        pensize(15)
         fillcolor(color_list[color_vari])
         begin_fill()
         pendown()
@@ -21,15 +22,9 @@ def logo():
             right(90)
         end_fill()
         penup()
-        pensize(15)
         forward(150)
         right(90)
         color_vari += 1
-    pensize(15)
-    pendown()
-    for outside_logo in range(4):
-        forward(150)
-        right(90)
 
     color('white')
     penup()

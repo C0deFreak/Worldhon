@@ -125,7 +125,7 @@ def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_ful
 # Opens a turtle window and sets it up
 title('Pywoon')
 hideturtle()
-speed(1000)
+speed(0)
 bgcolor('black')
 
 while True:
@@ -236,7 +236,7 @@ while True:
 
             # Draws win text
             if guess == secret_word[secret_number]:
-                time.sleep(2)
+                time.sleep(2.5)
                 text_draw()
                 color('white')
                 write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))

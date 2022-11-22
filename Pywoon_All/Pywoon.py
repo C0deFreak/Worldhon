@@ -119,7 +119,9 @@ def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_ful
 
 
 # Opens a turtle window and sets it up
+Screen()
 title('Pywoon')
+setup(width=1.0, height=1.0)
 hideturtle()
 speed(0)
 bgcolor('black')

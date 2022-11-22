@@ -71,8 +71,6 @@ def ending():
     goto(0, -50)
     write('Esc - EXIT', align='center', font=('MS Sans Serif', 15, 'bold'))
     goto(0, -75)
-    write('R - Rules', align='center', font=('MS Sans Serif', 15, 'bold'))
-    goto(0, -100)
     write('P - Play again', align='center', font=('MS Sans Serif', 15, 'bold'))
 
 
@@ -87,10 +85,10 @@ def removing_letter():
     end_fill()
 
 
-def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_full_drawing, not_grid):
+def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_full_drawing, not_grid, anim_pos):
     if not_grid:
         penup()
-        goto(-207, 140)
+        goto(-207, anim_pos)
 
     if first_tile:
         color(color_of_tile)
@@ -114,12 +112,10 @@ def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_ful
     end_fill()
 
     if not_grid:
-        goto(0, 0)
+        goto(0, anim_pos - 105)
         pendown()
         color('white')
         write(f'{anim_txt}', align='center', font=('MS Sans Serif', 20, 'bold'))
-        time.sleep(5)
-        clear()
 
 
 # Opens a turtle window and sets it up
@@ -128,14 +124,17 @@ hideturtle()
 speed(0)
 bgcolor('black')
 
+# Adds list of words in 'WordList' to this program
+secret_word = spliting_words()
+# 'tries' can not be bigger than this number
+guess_limit = 6
+
+
+# Starts the game program
 while True:
     # All the variables
-    # Adds list of words in 'WordList' to this program
-    secret_word = spliting_words()
     # Number grows with each guess
     tries = 0
-    # 'tries' can not be bigger than this number
-    guess_limit = 6
     # Divides the secret word to letters
     secret_word_letters = []
     # Chooses a random word from the list
@@ -146,15 +145,33 @@ while True:
     logo()
     time.sleep(3)
     clear()
+    # Rules animation
+    # Green TUTORIAL
+    animation_main(4, 'GREEN - Right letter & place', True, '#6CA965', '#787C7F', True, 225)
 
-    # Starts the game program
+    # Yellow TUTORIAL
+    animation_main(4, 'YELLOW - Right letter but wrong place', True, '#C8B653', '#787C7F', True, 75)
+
+    # Gray TUTORIAL
+    animation_main(5, 'GRAY - Wrong letter', False, '#787C7F', '#787C7F', True, -75)
+
+    penup()
+    goto(0, -220)
+    write('Enter - Continue', align='center', font=('MS Sans Serif', 15, 'bold'))
+
+    while keyboard.read_key() != 'enter':
+        pass
+
+    else:
+        clear()
+
     clear()
 
     # Draws the play board
     for column in range(6):
         penup()
         goto(-207, (250 - (column * 85)))
-        animation_main(5, '', False, '', 'gray30', False)
+        animation_main(5, '', False, '', 'gray30', False, 0)
 
     # Divides secret word letters and adds them to a list
     for letters in secret_word[secret_number]:
@@ -253,22 +270,6 @@ while True:
                     bye()
                     break
 
-                # Rules animation
-                if keyboard.read_key() == 'r':
-                    clear()
-
-                    # Green TUTORIAL
-                    animation_main(4, 'GREEN - Right letter & place', True, '#6CA965', '#787C7F', True)
-
-                    # Yellow TUTORIAL
-                    animation_main(4, 'YELLOW - Right letter but wrong place', True, '#C8B653', '#787C7F', True)
-
-                    # Gray TUTORIAL
-                    animation_main(5, 'GRAY - Wrong letter', False, '#787C7F', '#787C7F', True)
-
-                    bye()
-                    break
-
             tries += 1
             print(answer_mark)
 
@@ -296,20 +297,3 @@ while True:
         if ending_input == 'esc':
             bye()
             break
-
-        # Rules animation
-        if keyboard.read_key() == 'r':
-            clear()
-
-            # Green TUTORIAL
-            animation_main(4, 'GREEN - Right letter & place', True, '#6CA965', '#787C7F', True)
-
-            # Yellow TUTORIAL
-            animation_main(4, 'YELLOW - Right letter but wrong place', True, '#C8B653', '#787C7F', True)
-
-            # Gray TUTORIAL
-            animation_main(5, 'GRAY - Wrong letter', False, '#787C7F', '#787C7F', True)
-
-            bye()
-            break
-

@@ -262,15 +262,10 @@ while True:
                 ending()
                 while True:
                     ending_input = keyboard.read_key()
-                    if ending_input in ('esc', 'r', 'p'):
+
+                    if ending_input == 'esc':
+                        bye()
                         break
-
-                if ending_input == 'p':
-                    continue
-
-                if ending_input == 'esc':
-                    bye()
-                    break
 
             tries += 1
             print(answer_mark)
@@ -290,7 +285,7 @@ while True:
         ending()
         while True:
             ending_input = keyboard.read_key()
-            if ending_input in ('esc', 'r', 'p'):
+            if ending_input in ('esc', 'p'):
                 break
 
         if ending_input == 'p':

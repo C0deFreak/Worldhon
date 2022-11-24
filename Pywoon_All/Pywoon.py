@@ -40,7 +40,7 @@ def each_letter(color_of_holder):
 def text_draw():
     penup()
     color('white')
-    goto(0, 0)
+    goto(0, -50)
     pendown()
     clear()
 
@@ -68,10 +68,8 @@ def letter_holder(letter_write, write_color):
 # Delays the program from ending too quickly
 def ending():
     penup()
-    goto(0, -50)
+    goto(0, -100)
     write('Esc - EXIT', align='center', font=('MS Sans Serif', 15, 'bold'))
-    goto(0, -75)
-    write('P - Play again', align='center', font=('MS Sans Serif', 15, 'bold'))
 
 
 # Function that paints over letters if you input a word that isn't in list or when you use backspace
@@ -85,6 +83,7 @@ def removing_letter():
     end_fill()
 
 
+# Rules Animation
 def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_full_drawing, not_grid, anim_pos):
     if not_grid:
         penup()
@@ -118,8 +117,81 @@ def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_ful
         write(f'{anim_txt}', align='center', font=('MS Sans Serif', 20, 'bold'))
 
 
+# Graph that shows you your results
+def end_graph():
+    first_try = 0
+    second_try = 0
+    third_try = 0
+    fort_try = 0
+    fifth_try = 0
+    sixth_try = 0
+    fail = 0
+    all_tries = 0
+
+    with open('UserResult.txt') as f:
+        result = f.read()
+        str(result)
+    result_list = result.split()
+
+    for graph_check in result_list:
+        if graph_check == '1':
+            first_try += 1
+            all_tries += 1
+
+        elif graph_check == '2':
+            second_try += 1
+            all_tries += 1
+
+        elif graph_check == '3':
+            third_try += 1
+            all_tries += 1
+
+        elif graph_check == '4':
+            fort_try += 1
+            all_tries += 1
+
+        elif graph_check == '5':
+            fifth_try += 1
+            all_tries += 1
+
+        elif graph_check == '6':
+            sixth_try += 1
+            all_tries += 1
+
+        else:
+            fail += 1
+            all_tries += 1
+
+    tries_list = [first_try, second_try, third_try, fort_try, fifth_try, sixth_try, fail]
+    list_of_names = ['1', '2', '3', '4', '5', '6', 'X']
+    number_graph = 0
+    penup()
+    goto(-175, 50)
+    pencolor('white')
+    fillcolor('#6CA965')
+    for one_graph in tries_list:
+        begin_fill()
+        pendown()
+        forward(50)
+        left(90)
+        forward(round((tries_list[number_graph] / all_tries) * 100) * 3)
+        left(90)
+        forward(20)
+        write(f'{list_of_names[number_graph]}', align='center', font=('MS Sans Serif', 8, 'bold'))
+        forward(20)
+        left(90)
+        forward(round((tries_list[number_graph] / all_tries) * 100) * 3)
+        left(90)
+        forward(40)
+        end_fill()
+        number_graph += 1
+
+    penup()
+    goto(0, 315)
+    write('Result Graph', align='center', font=('MS Sans Serif', 15, 'bold'))
+
+
 # Opens a turtle window and sets it up
-Screen()
 title('Pywoon')
 setup(width=1.0, height=1.0)
 hideturtle()
@@ -140,7 +212,7 @@ while True:
     # Divides the secret word to letters
     secret_word_letters = []
     # Chooses a random word from the list
-    secret_number = random.randint(0, 2499)
+    secret_number = random.randint(0, 5756)
     # Divides guessed word to letters
     guess_letters = []
 
@@ -259,7 +331,10 @@ while True:
                 text_draw()
                 color('white')
                 write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
+                with open('UserResult.txt', 'a+', encoding='utf-8') as my_file:
+                    my_file.write(str(tries + 1) + '\n')
                 ending()
+                end_graph()
                 while True:
                     ending_input = keyboard.read_key()
 
@@ -282,7 +357,12 @@ while True:
         text_draw()
         color('white')
         write(f'Failed, the word was "{secret_word[secret_number]}"!', align='center', font=('MS Sans Serif', 35, 'bold'))
+        with open('UserResult.txt', 'a+', encoding='utf-8') as my_file:
+            my_file.write('x\n')
         ending()
+        goto(0, -125)
+        write('P - Play again', align='center', font=('MS Sans Serif', 15, 'bold'))
+        end_graph()
         while True:
             ending_input = keyboard.read_key()
             if ending_input in ('esc', 'p'):

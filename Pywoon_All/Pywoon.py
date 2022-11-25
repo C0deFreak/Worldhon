@@ -33,20 +33,20 @@ def logo():
 # Shortcut for letter_holder()
 def each_letter(color_of_holder):
     pendown()
-    letter_holder(letter_write=guess_letters[answer_index], write_color=color_of_holder)
+    letter_holder(letter_write=guess_letters[answer_index], write_color=color_of_holder, change_lh=color_in_dark_letters)
 
 
 # Shortcut for writing lose/win txt
-def text_draw():
+def text_draw(change_td):
     penup()
-    color('white')
+    color(change_td)
     goto(0, -50)
     pendown()
     clear()
 
 
 # Draws a holder depending on is the letter correct
-def letter_holder(letter_write, write_color):
+def letter_holder(letter_write, write_color, change_lh):
     pendown()
     color(write_color)
     begin_fill()
@@ -58,7 +58,7 @@ def letter_holder(letter_write, write_color):
     forward(37)
     right(90)
     forward(58)
-    color('white')
+    color(change_lh)
     write(f'{letter_write.upper()}', align='center', font=('Arial', 20, 'bold'))
     back(58)
     left(90)
@@ -83,8 +83,26 @@ def removing_letter():
     end_fill()
 
 
+def rules_anim_letters():
+    bgcolor(color_in_dark_bg)
+    penup()
+    goto(0, 225 - 105)
+    color(color_in_dark_letters)
+    write('GREEN - Right letter & place', align='center', font=('MS Sans Serif', 20, 'bold'))
+    goto(0, 75 - 105)
+    write('YELLOW - Right letter but wrong place', align='center', font=('MS Sans Serif', 20, 'bold'))
+    goto(0, -75 - 105)
+    write('GRAY - Wrong letter', align='center', font=('MS Sans Serif', 20, 'bold'))
+    goto(0, -220)
+    write('Enter - Continue', align='center', font=('MS Sans Serif', 15, 'bold'))
+    goto(0, -245)
+    write('L - Light theme', align='center', font=('MS Sans Serif', 15, 'bold'))
+    goto(0, -270)
+    write('D - Dark theme', align='center', font=('MS Sans Serif', 15, 'bold'))
+
+
 # Rules Animation
-def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_full_drawing, not_grid, anim_pos):
+def animation_main(times_draw, first_tile, color_of_tile, color_of_full_drawing, not_grid, anim_pos, change_am):
     if not_grid:
         penup()
         goto(-207, anim_pos)
@@ -110,15 +128,9 @@ def animation_main(times_draw, anim_txt, first_tile, color_of_tile, color_of_ful
         forward(85)
     end_fill()
 
-    if not_grid:
-        goto(0, anim_pos - 105)
-        pendown()
-        color('white')
-        write(f'{anim_txt}', align='center', font=('MS Sans Serif', 20, 'bold'))
-
 
 # Graph that shows you your results
-def end_graph():
+def end_graph(change_eg):
     first_try = 0
     second_try = 0
     third_try = 0
@@ -167,7 +179,7 @@ def end_graph():
     number_graph = 0
     penup()
     goto(-175, 50)
-    pencolor('white')
+    pencolor(change_eg)
     fillcolor('#6CA965')
     for one_graph in tries_list:
         begin_fill()
@@ -187,7 +199,7 @@ def end_graph():
         number_graph += 1
 
     penup()
-    goto(0, 315)
+    goto(0, 370)
     write('Result Graph', align='center', font=('MS Sans Serif', 15, 'bold'))
 
 
@@ -196,7 +208,9 @@ title('Pywoon')
 setup(width=1.0, height=1.0)
 hideturtle()
 speed(0)
-bgcolor('black')
+color_in_dark_bg = 'black'
+color_in_dark_letters = 'white'
+bgcolor(color_in_dark_bg)
 
 # Adds list of words in 'WordList' to this program
 secret_word = spliting_words()
@@ -221,20 +235,28 @@ while True:
     clear()
     # Rules animation
     # Green TUTORIAL
-    animation_main(4, 'GREEN - Right letter & place', True, '#6CA965', '#787C7F', True, 225)
+    animation_main(4, True, '#6CA965', '#787C7F', True, 225, color_in_dark_letters)
 
     # Yellow TUTORIAL
-    animation_main(4, 'YELLOW - Right letter but wrong place', True, '#C8B653', '#787C7F', True, 75)
+    animation_main(4, True, '#C8B653', '#787C7F', True, 75,
+                   color_in_dark_letters)
 
     # Gray TUTORIAL
-    animation_main(5, 'GRAY - Wrong letter', False, '#787C7F', '#787C7F', True, -75)
+    animation_main(5, False, '#787C7F', '#787C7F', True, -75, color_in_dark_letters)
 
-    penup()
-    goto(0, -220)
-    write('Enter - Continue', align='center', font=('MS Sans Serif', 15, 'bold'))
+    rules_anim_letters()
 
     while keyboard.read_key() != 'enter':
-        pass
+        if keyboard.read_key() == 'l':
+            color_in_dark_letters = 'black'
+            color_in_dark_bg = 'white'
+            rules_anim_letters()
+
+        if keyboard.read_key() == 'd':
+            color_in_dark_letters = 'white'
+            color_in_dark_bg = 'black'
+            bgcolor(color_in_dark_bg)
+            rules_anim_letters()
 
     else:
         clear()
@@ -245,7 +267,7 @@ while True:
     for column in range(6):
         penup()
         goto(-207, (250 - (column * 85)))
-        animation_main(5, '', False, '', 'gray30', False, 0)
+        animation_main(5, False, '', 'gray30', False, 0, color_in_dark_letters)
 
     # Divides secret word letters and adds them to a list
     for letters in secret_word[secret_number]:
@@ -262,7 +284,7 @@ while True:
 
         # Checks if you already input the guess
         while number_for_guessing < 6:
-            color('white')
+            color(color_in_dark_letters)
             input_letters = keyboard.read_key()
 
             if input_letters == 'enter' and number_for_guessing == 5:
@@ -328,13 +350,13 @@ while True:
             # Draws win text
             if guess == secret_word[secret_number]:
                 time.sleep(2.5)
-                text_draw()
-                color('white')
+                text_draw(change_td=color_in_dark_letters)
+                color(color_in_dark_letters)
                 write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
                 with open('UserResult.txt', 'a+', encoding='utf-8') as my_file:
                     my_file.write(str(tries + 1) + '\n')
                 ending()
-                end_graph()
+                end_graph(change_eg=color_in_dark_letters)
                 while True:
                     ending_input = keyboard.read_key()
 
@@ -354,15 +376,15 @@ while True:
 
     # Draws lose text
     else:
-        text_draw()
-        color('white')
+        text_draw(change_td=color_in_dark_letters)
+        color(color_in_dark_letters)
         write(f'Failed, the word was "{secret_word[secret_number]}"!', align='center', font=('MS Sans Serif', 35, 'bold'))
         with open('UserResult.txt', 'a+', encoding='utf-8') as my_file:
             my_file.write('x\n')
         ending()
         goto(0, -125)
         write('P - Play again', align='center', font=('MS Sans Serif', 15, 'bold'))
-        end_graph()
+        end_graph(change_eg=color_in_dark_letters)
         while True:
             ending_input = keyboard.read_key()
             if ending_input in ('esc', 'p'):

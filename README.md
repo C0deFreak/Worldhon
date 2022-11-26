@@ -1,9 +1,4 @@
-# Python Projects
-My main python projects choosen from my coding adventure
-Current projects:
-- Pywoon(Wordle type of game)
-- Graph maker
-- Spam bot 
-- PY Paint
-
-P.S. Feel free to use my code for learning and fun
+# Pywoon
+This is an interesting game that you might find cool!
+Yes, this is a Wordle clone but it is completly developed by me, Code Freak, in Python and it does have it own little spin
+Hope you like it!

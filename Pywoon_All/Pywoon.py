@@ -3,6 +3,7 @@ from WordList import spliting_words
 from turtle import *
 import time
 import keyboard
+import winsound
 
 
 # Logo that shows up at the beginning of the game or rules
@@ -59,7 +60,7 @@ def letter_holder(letter_write, write_color, change_lh):
     right(90)
     forward(58)
     color(change_lh)
-    write(f'{letter_write.upper()}', align='center', font=('Arial', 20, 'bold'))
+    write(f'{letter_write.upper()}', align='center', font=('Arial', 25, 'bold'))
     back(58)
     left(90)
     forward(48)
@@ -170,9 +171,12 @@ def end_graph(change_eg):
             sixth_try += 1
             all_tries += 1
 
-        else:
+        elif graph_check == 'x':
             fail += 1
             all_tries += 1
+
+        else:
+            pass
 
     tries_list = [first_try, second_try, third_try, fort_try, fifth_try, sixth_try, fail]
     list_of_names = ['1', '2', '3', '4', '5', '6', 'X']
@@ -217,6 +221,9 @@ secret_word = spliting_words()
 # 'tries' can not be bigger than this number
 guess_limit = 6
 
+logo()
+time.sleep(3)
+clear()
 
 # Starts the game program
 while True:
@@ -230,8 +237,6 @@ while True:
     # Divides guessed word to letters
     guess_letters = []
 
-    logo()
-    time.sleep(3)
     clear()
     # Rules animation
     # Green TUTORIAL
@@ -301,12 +306,14 @@ while True:
 
             # Draws the letter you input
             if len(input_letters) == 1 and number_for_guessing < 5:
+                winsound.PlaySound('Input_Letter.wav', winsound.SND_ASYNC)
+                time.sleep(0.2)
                 penup()
                 sety(250 - (tries * 85))
                 forward(37.5)
                 right(90)
                 forward(57.5)
-                write(f'{input_letters.upper()}', align='center', font=('Arial', 20, 'bold'))
+                write(f'{input_letters.upper()}', align='center', font=('Arial', 25, 'bold'))
                 back(57.5)
                 left(90)
                 forward(47.5)
@@ -336,20 +343,27 @@ while True:
                 # Correct letter and place
                 if answers == secret_word_letters[answer_index]:
                     each_letter('#6CA965')
+                    winsound.PlaySound('Right_Letter.wav', winsound.SND_ASYNC)
+                    time.sleep(0.2)
 
                 # Correct letter but wrong place
                 elif answers in secret_word_letters and guess_letters[answer_index] != secret_word_letters[answer_index]:
                     each_letter('#C8B653')
+                    winsound.PlaySound('Place_Letter.wav', winsound.SND_ASYNC)
+                    time.sleep(0.2)
 
                 # Wrong letter
                 else:
                     each_letter('#787C7F')
+                    winsound.PlaySound('Wrong_Letter.wav', winsound.SND_ASYNC)
+                    time.sleep(0.2)
 
                 answer_index += 1
 
             # Draws win text
             if guess == secret_word[secret_number]:
-                time.sleep(2.5)
+                winsound.PlaySound('Win_Sound.wav', winsound.SND_ASYNC)
+                time.sleep(1.5)
                 text_draw(change_td=color_in_dark_letters)
                 color(color_in_dark_letters)
                 write(f'You won in {tries + 1} tries!', align='center', font=('MS Sans Serif', 35, 'bold'))
